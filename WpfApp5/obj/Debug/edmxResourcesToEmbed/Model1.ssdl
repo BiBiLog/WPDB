@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище BDWPFModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FIO">
+    <Key>
+      <PropertyRef Name="ID_FIO" />
+    </Key>
+    <Property Name="ID_FIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Imya" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" />
+    <Property Name="ID_Nomer" Type="int" Nullable="false" />
+    <Property Name="ID_Zadolzhnost" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Nomer">
+    <Key>
+      <PropertyRef Name="ID_Nomer" />
+    </Key>
+    <Property Name="ID_Nomer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nomer" Type="nchar" MaxLength="12" Nullable="false" />
+    <Property Name="ID_FIO" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Zadolzhnost">
+    <Key>
+      <PropertyRef Name="ID_zadolzhnost" />
+    </Key>
+    <Property Name="ID_zadolzhnost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Summa" Type="money" Nullable="false" />
+    <Property Name="SrokOplati" Type="int" Nullable="false" />
+    <Property Name="ID_FIO" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Nomer_FIO">
+    <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+    <End Role="Nomer" Type="Self.Nomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FIO">
+        <PropertyRef Name="ID_FIO" />
+      </Principal>
+      <Dependent Role="Nomer">
+        <PropertyRef Name="ID_FIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Zadolzhnost_FIO">
+    <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+    <End Role="Zadolzhnost" Type="Self.Zadolzhnost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FIO">
+        <PropertyRef Name="ID_FIO" />
+      </Principal>
+      <Dependent Role="Zadolzhnost">
+        <PropertyRef Name="ID_FIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище BDWPFModelContainer">
+    <EntitySet Name="FIO" EntityType="Self.FIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nomer" EntityType="Self.Nomer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zadolzhnost" EntityType="Self.Zadolzhnost" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Nomer_FIO" Association="Self.FK_Nomer_FIO">
+      <End Role="FIO" EntitySet="FIO" />
+      <End Role="Nomer" EntitySet="Nomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zadolzhnost_FIO" Association="Self.FK_Zadolzhnost_FIO">
+      <End Role="FIO" EntitySet="FIO" />
+      <End Role="Zadolzhnost" EntitySet="Zadolzhnost" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

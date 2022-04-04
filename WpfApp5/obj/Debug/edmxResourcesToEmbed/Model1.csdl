@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDWPFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="FIO">
+    <Key>
+      <PropertyRef Name="ID_FIO" />
+    </Key>
+    <Property Name="ID_FIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Imya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ID_Nomer" Type="Int32" Nullable="false" />
+    <Property Name="ID_Zadolzhnost" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Nomer" Relationship="Self.FK_Nomer_FIO" FromRole="FIO" ToRole="Nomer" />
+    <NavigationProperty Name="Zadolzhnost" Relationship="Self.FK_Zadolzhnost_FIO" FromRole="FIO" ToRole="Zadolzhnost" />
+  </EntityType>
+  <EntityType Name="Nomer">
+    <Key>
+      <PropertyRef Name="ID_Nomer" />
+    </Key>
+    <Property Name="ID_Nomer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nomer1" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ID_FIO" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FIO" Relationship="Self.FK_Nomer_FIO" FromRole="Nomer" ToRole="FIO" />
+  </EntityType>
+  <EntityType Name="Zadolzhnost">
+    <Key>
+      <PropertyRef Name="ID_zadolzhnost" />
+    </Key>
+    <Property Name="ID_zadolzhnost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Summa" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SrokOplati" Type="Int32" Nullable="false" />
+    <Property Name="ID_FIO" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FIO" Relationship="Self.FK_Zadolzhnost_FIO" FromRole="Zadolzhnost" ToRole="FIO" />
+  </EntityType>
+  <Association Name="FK_Nomer_FIO">
+    <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+    <End Role="Nomer" Type="Self.Nomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FIO">
+        <PropertyRef Name="ID_FIO" />
+      </Principal>
+      <Dependent Role="Nomer">
+        <PropertyRef Name="ID_FIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Zadolzhnost_FIO">
+    <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+    <End Role="Zadolzhnost" Type="Self.Zadolzhnost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FIO">
+        <PropertyRef Name="ID_FIO" />
+      </Principal>
+      <Dependent Role="Zadolzhnost">
+        <PropertyRef Name="ID_FIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDWPFEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FIO" EntityType="Self.FIO" />
+    <EntitySet Name="Nomer" EntityType="Self.Nomer" />
+    <EntitySet Name="Zadolzhnost" EntityType="Self.Zadolzhnost" />
+    <AssociationSet Name="FK_Nomer_FIO" Association="Self.FK_Nomer_FIO">
+      <End Role="FIO" EntitySet="FIO" />
+      <End Role="Nomer" EntitySet="Nomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zadolzhnost_FIO" Association="Self.FK_Zadolzhnost_FIO">
+      <End Role="FIO" EntitySet="FIO" />
+      <End Role="Zadolzhnost" EntitySet="Zadolzhnost" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

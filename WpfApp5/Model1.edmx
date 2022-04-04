@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище BDWPFModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FIO">
+          <Key>
+            <PropertyRef Name="ID_FIO" />
+          </Key>
+          <Property Name="ID_FIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Imya" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Nomer" Type="int" Nullable="false" />
+          <Property Name="ID_Zadolzhnost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nomer">
+          <Key>
+            <PropertyRef Name="ID_Nomer" />
+          </Key>
+          <Property Name="ID_Nomer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nomer" Type="nchar" MaxLength="12" Nullable="false" />
+          <Property Name="ID_FIO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zadolzhnost">
+          <Key>
+            <PropertyRef Name="ID_zadolzhnost" />
+          </Key>
+          <Property Name="ID_zadolzhnost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Summa" Type="money" Nullable="false" />
+          <Property Name="SrokOplati" Type="int" Nullable="false" />
+          <Property Name="ID_FIO" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Nomer_FIO">
+          <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+          <End Role="Nomer" Type="Self.Nomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FIO">
+              <PropertyRef Name="ID_FIO" />
+            </Principal>
+            <Dependent Role="Nomer">
+              <PropertyRef Name="ID_FIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zadolzhnost_FIO">
+          <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+          <End Role="Zadolzhnost" Type="Self.Zadolzhnost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FIO">
+              <PropertyRef Name="ID_FIO" />
+            </Principal>
+            <Dependent Role="Zadolzhnost">
+              <PropertyRef Name="ID_FIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище BDWPFModelContainer">
+          <EntitySet Name="FIO" EntityType="Self.FIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nomer" EntityType="Self.Nomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zadolzhnost" EntityType="Self.Zadolzhnost" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Nomer_FIO" Association="Self.FK_Nomer_FIO">
+            <End Role="FIO" EntitySet="FIO" />
+            <End Role="Nomer" EntitySet="Nomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zadolzhnost_FIO" Association="Self.FK_Zadolzhnost_FIO">
+            <End Role="FIO" EntitySet="FIO" />
+            <End Role="Zadolzhnost" EntitySet="Zadolzhnost" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDWPFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FIO">
+          <Key>
+            <PropertyRef Name="ID_FIO" />
+          </Key>
+          <Property Name="ID_FIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Imya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Nomer" Type="Int32" Nullable="false" />
+          <Property Name="ID_Zadolzhnost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Nomer" Relationship="Self.FK_Nomer_FIO" FromRole="FIO" ToRole="Nomer" />
+          <NavigationProperty Name="Zadolzhnost" Relationship="Self.FK_Zadolzhnost_FIO" FromRole="FIO" ToRole="Zadolzhnost" />
+        </EntityType>
+        <EntityType Name="Nomer">
+          <Key>
+            <PropertyRef Name="ID_Nomer" />
+          </Key>
+          <Property Name="ID_Nomer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nomer1" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ID_FIO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FIO" Relationship="Self.FK_Nomer_FIO" FromRole="Nomer" ToRole="FIO" />
+        </EntityType>
+        <EntityType Name="Zadolzhnost">
+          <Key>
+            <PropertyRef Name="ID_zadolzhnost" />
+          </Key>
+          <Property Name="ID_zadolzhnost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Summa" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="SrokOplati" Type="Int32" Nullable="false" />
+          <Property Name="ID_FIO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FIO" Relationship="Self.FK_Zadolzhnost_FIO" FromRole="Zadolzhnost" ToRole="FIO" />
+        </EntityType>
+        <Association Name="FK_Nomer_FIO">
+          <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+          <End Role="Nomer" Type="Self.Nomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FIO">
+              <PropertyRef Name="ID_FIO" />
+            </Principal>
+            <Dependent Role="Nomer">
+              <PropertyRef Name="ID_FIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zadolzhnost_FIO">
+          <End Role="FIO" Type="Self.FIO" Multiplicity="1" />
+          <End Role="Zadolzhnost" Type="Self.Zadolzhnost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FIO">
+              <PropertyRef Name="ID_FIO" />
+            </Principal>
+            <Dependent Role="Zadolzhnost">
+              <PropertyRef Name="ID_FIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDWPFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FIO" EntityType="Self.FIO" />
+          <EntitySet Name="Nomer" EntityType="Self.Nomer" />
+          <EntitySet Name="Zadolzhnost" EntityType="Self.Zadolzhnost" />
+          <AssociationSet Name="FK_Nomer_FIO" Association="Self.FK_Nomer_FIO">
+            <End Role="FIO" EntitySet="FIO" />
+            <End Role="Nomer" EntitySet="Nomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zadolzhnost_FIO" Association="Self.FK_Zadolzhnost_FIO">
+            <End Role="FIO" EntitySet="FIO" />
+            <End Role="Zadolzhnost" EntitySet="Zadolzhnost" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BDWPFModelContainer" CdmEntityContainer="BDWPFEntities">
+          <EntitySetMapping Name="FIO">
+            <EntityTypeMapping TypeName="BDWPFModel.FIO">
+              <MappingFragment StoreEntitySet="FIO">
+                <ScalarProperty Name="ID_FIO" ColumnName="ID_FIO" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="Imya" ColumnName="Imya" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="ID_Nomer" ColumnName="ID_Nomer" />
+                <ScalarProperty Name="ID_Zadolzhnost" ColumnName="ID_Zadolzhnost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nomer">
+            <EntityTypeMapping TypeName="BDWPFModel.Nomer">
+              <MappingFragment StoreEntitySet="Nomer">
+                <ScalarProperty Name="ID_Nomer" ColumnName="ID_Nomer" />
+                <ScalarProperty Name="Nomer1" ColumnName="Nomer" />
+                <ScalarProperty Name="ID_FIO" ColumnName="ID_FIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zadolzhnost">
+            <EntityTypeMapping TypeName="BDWPFModel.Zadolzhnost">
+              <MappingFragment StoreEntitySet="Zadolzhnost">
+                <ScalarProperty Name="ID_zadolzhnost" ColumnName="ID_zadolzhnost" />
+                <ScalarProperty Name="Summa" ColumnName="Summa" />
+                <ScalarProperty Name="SrokOplati" ColumnName="SrokOplati" />
+                <ScalarProperty Name="ID_FIO" ColumnName="ID_FIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

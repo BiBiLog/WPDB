@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище BDWPFModelContainer" CdmEntityContainer="BDWPFEntities">
+    <EntitySetMapping Name="FIO">
+      <EntityTypeMapping TypeName="BDWPFModel.FIO">
+        <MappingFragment StoreEntitySet="FIO">
+          <ScalarProperty Name="ID_FIO" ColumnName="ID_FIO" />
+          <ScalarProperty Name="Familia" ColumnName="Familia" />
+          <ScalarProperty Name="Imya" ColumnName="Imya" />
+          <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+          <ScalarProperty Name="ID_Nomer" ColumnName="ID_Nomer" />
+          <ScalarProperty Name="ID_Zadolzhnost" ColumnName="ID_Zadolzhnost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Nomer">
+      <EntityTypeMapping TypeName="BDWPFModel.Nomer">
+        <MappingFragment StoreEntitySet="Nomer">
+          <ScalarProperty Name="ID_Nomer" ColumnName="ID_Nomer" />
+          <ScalarProperty Name="Nomer1" ColumnName="Nomer" />
+          <ScalarProperty Name="ID_FIO" ColumnName="ID_FIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zadolzhnost">
+      <EntityTypeMapping TypeName="BDWPFModel.Zadolzhnost">
+        <MappingFragment StoreEntitySet="Zadolzhnost">
+          <ScalarProperty Name="ID_zadolzhnost" ColumnName="ID_zadolzhnost" />
+          <ScalarProperty Name="Summa" ColumnName="Summa" />
+          <ScalarProperty Name="SrokOplati" ColumnName="SrokOplati" />
+          <ScalarProperty Name="ID_FIO" ColumnName="ID_FIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
